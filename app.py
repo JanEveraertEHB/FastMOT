@@ -15,7 +15,7 @@ import fastmot
 
 
 def main():
-    
+
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-m', '--mot', action='store_true', help='run multiple object tracker')
     parser.add_argument('-i', '--input_uri', metavar="URI", required=True, help=
@@ -78,7 +78,7 @@ def main():
                         log.write(f'{mot.frame_count},{track.trk_id},{tl[0]:.6f},{tl[1]:.6f},'
                                   f'{w:.6f},{h:.6f},-1,-1,-1\n')
                         
-                if arg.server:
+                if args.server:
                     for track in mot.visible_tracks:
                         # MOT17 dataset is usually of size 1920x1080, modify this otherwise
                         orig_size = (1920, 1080)
