@@ -80,10 +80,10 @@ def main():
                             "detection": {
                                 "frame": mot.frame_count,
                                 "personID": track.trk_id,
-                                "x": tl[0]:.6f,
-                                "y": tl[1]:.6f,
-                                "width": w:.6f,
-                                "height": h:.6f
+                                "x": tl[0],
+                                "y": tl[1],
+                                "width": w,
+                                "height": h
                             },
                             "test": 1,
                             "location": "brussels",
