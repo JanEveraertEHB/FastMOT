@@ -7,6 +7,10 @@ import time
 import json
 import cv2
 
+import requests
+
+URL = "http://datacratie.cc/apiV2/datapoint/create.php"
+
 import fastmot
 
 
@@ -71,6 +75,23 @@ def main():
                         w, h = br - tl + 1
                         log.write(f'{mot.frame_count},{track.trk_id},{tl[0]:.6f},{tl[1]:.6f},'
                                   f'{w:.6f},{h:.6f},-1,-1,-1\n')
+                        timestamp = time.time()
+                        data = {
+                            "detection": {
+                                "frame": mot.frame_count,
+                                "personID": track.trk_id,
+                                "x": tl[0]:.6f,
+                                "y": tl[1]:.6f,
+                                "width": w:.6f,
+                                "height": h:.6f
+                            },
+                            "test": 1,
+                            "location": "brussels",
+                            "device": "jetson nano",
+                            "timestamp": timestamp
+                        }
+                        requests.post(url = URL, json = data)
+                        
 
             if args.gui:
                 cv2.imshow('Video', frame)
