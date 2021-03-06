@@ -15,6 +15,7 @@ import fastmot
 
 
 def main():
+    
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-m', '--mot', action='store_true', help='run multiple object tracker')
     parser.add_argument('-i', '--input_uri', metavar="URI", required=True, help=
@@ -29,6 +30,7 @@ def main():
                         help='output a MOT Challenge format log (e.g. eval/results/mot17-04.txt)')
     parser.add_argument('-g', '--gui', action='store_true', help='enable display')
     parser.add_argument('-v', '--verbose', action='store_true', help='verbose output for debugging')
+    parser.add_argument('-s', '--server', action='store_true', help='send to datacratie server')
     args = parser.parse_args()
 
     # set up logging
@@ -75,15 +77,23 @@ def main():
                         w, h = br - tl + 1
                         log.write(f'{mot.frame_count},{track.trk_id},{tl[0]:.6f},{tl[1]:.6f},'
                                   f'{w:.6f},{h:.6f},-1,-1,-1\n')
+                        
+                if arg.server:
+                    for track in mot.visible_tracks:
+                        # MOT17 dataset is usually of size 1920x1080, modify this otherwise
+                        orig_size = (1920, 1080)
+                        tl = track.tlbr[:2] / config['size'] * orig_size
+                        br = track.tlbr[2:] / config['size'] * orig_size
+                        w, h = br - tl + 1
                         timestamp = time.time()
                         data = {
-                            "detection": {
+                            "datapoint": {
                                 "frame": mot.frame_count,
                                 "personID": track.trk_id,
                                 "x": tl[0],
                                 "y": tl[1],
-                                "width": w,
-                                "height": h
+                                "w": w,
+                                "h": h
                             },
                             "test": 1,
                             "location": "brussels",
@@ -91,7 +101,7 @@ def main():
                             "timestamp": timestamp
                         }
                         requests.post(url = URL, json = data)
-                        
+
 
             if args.gui:
                 cv2.imshow('Video', frame)
