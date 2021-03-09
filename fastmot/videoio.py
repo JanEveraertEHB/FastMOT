@@ -161,7 +161,7 @@ class VideoIO:
                 pipeline = (
                     'nvarguscamerasrc sensor_id=%s ! '
                     'video/x-raw(memory:NVMM), width=(int)%d, height=(int)%d, '
-                    'format=(string)NV12, framerate=(fraction)%d/1 ! '
+                    'format=(string)NV12, framerate=(fraction)%d/1 ! nvvidconv flip-method=2 ! '
                     % (
                         self.input_uri[6:],
                         *self.camera_size,

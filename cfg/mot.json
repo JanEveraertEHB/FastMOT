@@ -9,7 +9,7 @@
 
     "mot": {
         "detector_type": "YOLO",
-        "detector_frame_skip": 5,
+        "detector_frame_skip": 7,
 
         "ssd_detector": {
             "model": "SSDInceptionV2",
@@ -38,7 +38,7 @@
         },
 
         "multi_tracker": {
-            "max_age": 7,
+            "max_age": 5,
             "age_factor": 2,
             "motion_weight": 0.02,
             "max_feat_cost": 0.9,
