@@ -9,7 +9,7 @@ import cv2
 
 import requests
 
-URL = "http://datacratie.cc/apiV2/datapoint/create.php"
+URL = "http://fastspace.be/apiV2/datapoint/create.php"
 
 import fastmot
 

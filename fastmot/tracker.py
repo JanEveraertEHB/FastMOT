@@ -182,6 +182,7 @@ class MultiTracker:
                 LOGGER.info('Found: %s', track)
             if iom(next_tlbr, self.frame_rect) < 0.5:
                 LOGGER.info('Out: %s', track)
+                # // we can do great things here
                 self._mark_lost(trk_id)
             else:
                 updated.append(trk_id)
