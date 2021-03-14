@@ -3,6 +3,9 @@ import itertools
 import logging
 import numpy as np
 import numba as nb
+
+import requests
+
 from scipy.optimize import linear_sum_assignment
 from scipy.spatial.distance import cdist
 from cython_bbox import bbox_overlaps
@@ -123,6 +126,8 @@ class MultiTracker:
             if iom(next_tlbr, self.frame_rect) < 0.5:
                 if track.confirmed:
                     LOGGER.info('Out: %s', track)
+                    fullUrl = "https://fastspace.be/apiV2/datapoint/closePath.php?id=" + track.personID()
+                    requests.get(url = fullUrl)
                     self._mark_lost(trk_id)
                 else:
                     del self.tracks[trk_id]
@@ -182,6 +187,8 @@ class MultiTracker:
                 LOGGER.info('Found: %s', track)
             if iom(next_tlbr, self.frame_rect) < 0.5:
                 LOGGER.info('Out: %s', track)
+                fullUrl = "https://fastspace.be/apiV2/datapoint/closePath.php?id=" + track.personID()
+                requests.get(url = fullUrl)
                 # // we can do great things here
                 self._mark_lost(trk_id)
             else:
@@ -208,6 +215,8 @@ class MultiTracker:
             track.mark_missed()
             if track.age > self.max_age:
                 LOGGER.info('Lost: %s', track)
+                fullUrl = "https://fastspace.be/apiV2/datapoint/closePath.php?id=" + track.personID()
+                requests.get(url = fullUrl)
                 self._mark_lost(trk_id)
             else:
                 aged.append(trk_id)

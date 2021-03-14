@@ -24,6 +24,8 @@ class Track:
     def __str__(self):
         return "%s %d at %s" % (LABEL_MAP[self.label], self.trk_id,
                                 get_center(self.tlbr).astype(int))
+    def personID(self):
+        return str(self.trk_id)
 
     def __repr__(self):
         return self.__str__()
