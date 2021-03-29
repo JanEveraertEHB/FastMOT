@@ -127,7 +127,10 @@ class MultiTracker:
                 if track.confirmed:
                     LOGGER.info('Out: %s', track)
                     fullUrl = "https://fastspace.be/apiV2/datapoint/closePath.php?id=" + track.personID()
-                    requests.get(url = fullUrl)
+                    try:
+                        requests.get(url = fullUrl)
+                    except: 
+                        print("Connection error")
                     self._mark_lost(trk_id)
                 else:
                     del self.tracks[trk_id]
@@ -188,7 +191,10 @@ class MultiTracker:
             if iom(next_tlbr, self.frame_rect) < 0.5:
                 LOGGER.info('Out: %s', track)
                 fullUrl = "https://fastspace.be/apiV2/datapoint/closePath.php?id=" + track.personID()
-                requests.get(url = fullUrl)
+                try:
+                    requests.get(url = fullUrl)
+                except: 
+                    print("Connection error")
                 # // we can do great things here
                 self._mark_lost(trk_id)
             else:
@@ -216,7 +222,10 @@ class MultiTracker:
             if track.age > self.max_age:
                 LOGGER.info('Lost: %s', track)
                 fullUrl = "https://fastspace.be/apiV2/datapoint/closePath.php?id=" + track.personID()
-                requests.get(url = fullUrl)
+                try:
+                    requests.get(url = fullUrl)
+                except:
+                    print("Connection error")
                 self._mark_lost(trk_id)
             else:
                 aged.append(trk_id)
