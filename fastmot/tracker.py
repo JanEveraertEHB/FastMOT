@@ -130,7 +130,7 @@ class MultiTracker:
                     try:
                         requests.get(url = fullUrl)
                     except: 
-                        print("Connection error")
+                        print("Connection error on out")
                     self._mark_lost(trk_id)
                 else:
                     del self.tracks[trk_id]
@@ -194,7 +194,7 @@ class MultiTracker:
                 try:
                     requests.get(url = fullUrl)
                 except: 
-                    print("Connection error")
+                    print("Connection error on out")
                 # // we can do great things here
                 self._mark_lost(trk_id)
             else:
@@ -225,7 +225,7 @@ class MultiTracker:
                 try:
                     requests.get(url = fullUrl)
                 except:
-                    print("Connection error")
+                    print("Connection error on lost")
                 self._mark_lost(trk_id)
             else:
                 aged.append(trk_id)
