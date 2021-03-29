@@ -100,9 +100,10 @@ def main():
                             "device": "jetson nano",
                             "timestamp": timestamp
                         }
-                        requests.post(url = URL, json = data)
-
-
+                        try:
+                            requests.post(url = URL, json = data)
+                        except: 
+                            print("Connection error")
             if args.gui:
                 cv2.imshow('Video', frame)
                 if cv2.waitKey(1) & 0xFF == 27:
